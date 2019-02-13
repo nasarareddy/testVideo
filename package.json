@@ -1,0 +1,19 @@
+{
+  "name": "videocall",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ajay.s/samplevideoplugin.git"
+  },
+  "author": "ajay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/ajay.s/samplevideoplugin/issues"
+  },
+  "homepage": "https://gitlab.com/ajay.s/samplevideoplugin#readme"
+}
