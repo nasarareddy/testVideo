@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/ajay.s/samplevideoplugin.git"
+    "url": "git+https://github.com/nasarareddy/testVideo.git"
   },
-  "author": "ajay",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/ajay.s/samplevideoplugin/issues"
+    "url": "https://github.com/nasarareddy/testVideo/issues"
   },
-  "homepage": "https://gitlab.com/ajay.s/samplevideoplugin#readme"
+  "homepage": "https://github.com/nasarareddy/testVideo#readme"
 }
