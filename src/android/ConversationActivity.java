@@ -77,7 +77,7 @@ import static com.twilio.video.quickstart.R.drawable.ic_volume_up_white_24dp;
 
 public class ConversationActivity extends AppCompatActivity {
     private static final int CAMERA_MIC_PERMISSION_REQUEST_CODE = 1;
-    private static final String TAG = "VideoActivity";
+    private static final String TAG = "ConversationActivity";
 
  /*
      * Audio and video tracks can be created with names. This feature is useful for categorizing
@@ -186,6 +186,10 @@ public class ConversationActivity extends AppCompatActivity {
         /*
          * Check camera and microphone permissions. Needed in Android M.
          */
+        audioCodec = getAudioCodecPreference("audio_codec",
+        OpusCodec.NAME);
+        videoCodec = getVideoCodecPreference("video_codec",
+        Vp8Codec.NAME);
         if (!checkPermissionForCameraAndMicrophone()) {
             requestPermissionForCameraAndMicrophone();
         } else {
@@ -254,9 +258,9 @@ public class ConversationActivity extends AppCompatActivity {
          /*
          * Update preferred audio and video codec in case changed in settings
          */
-        audioCodec = getAudioCodecPreference('audio_codec',
+        audioCodec = getAudioCodecPreference("audio_codec",
                OpusCodec.NAME);
-        videoCodec = getVideoCodecPreference('video_codec',
+        videoCodec = getVideoCodecPreference("video_codec",
                Vp8Codec.NAME);
  /*
          * Get latest encoding parameters
@@ -658,7 +662,7 @@ public class ConversationActivity extends AppCompatActivity {
             public void onDisconnected(Room room, TwilioException e) {
                 localParticipant = null;
                 videoStatusTextView.setText("Disconnected from " + room.getName());
-                VideoActivity.this.room = null;
+                ConversationActivity.this.room = null;
                 // Only reinitialize the UI if disconnect was not called from onDestroy()
                 if (!disconnectedFromOnDestroy) {
                     configureAudio(false);
@@ -1018,7 +1022,7 @@ private RemoteParticipant.Listener remoteParticipantListener() {
                     switchCameraActionFab.hide();
                 }
                 localVideoActionFab.setImageDrawable(
-                        ContextCompat.getDrawable(VideoActivity.this, icon));
+                        ContextCompat.getDrawable(ConversationActivity.this, icon));
             }
         };
     }
@@ -1036,7 +1040,7 @@ private RemoteParticipant.Listener remoteParticipantListener() {
                 int icon = enable ?
                         R.drawable.ic_mic_white_24dp : R.drawable.ic_mic_off_black_24dp;
                 muteActionFab.setImageDrawable(ContextCompat.getDrawable(
-                        VideoActivity.this, icon));
+                    ConversationActivity.this, icon));
             }
         };
     }
@@ -1085,30 +1089,30 @@ private RemoteParticipant.Listener remoteParticipantListener() {
                 });
     }
 
-    private void configureAudio(boolean enable) {
-        if (enable) {
-            previousAudioMode = audioManager.getMode();
-            // Request audio focus before making any device switch.
-            audioManager.requestAudioFocus(null, AudioManager.STREAM_VOICE_CALL,
-                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-            /*
-             * Use MODE_IN_COMMUNICATION as the default audio mode. It is required
-             * to be in this mode when playout and/or recording starts for the best
-             * possible VoIP performance. Some devices have difficulties with
-             * speaker mode if this is not set.
-             */
-            audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-            /*
-             * Always disable microphone mute during a WebRTC call.
-             */
-            previousMicrophoneMute = audioManager.isMicrophoneMute();
-            audioManager.setMicrophoneMute(false);
-        } else {
-            audioManager.setMode(previousAudioMode);
-            audioManager.abandonAudioFocus(null);
-            audioManager.setMicrophoneMute(previousMicrophoneMute);
-        }
-    }
+    // private void configureAudio(boolean enable) {
+    //     if (enable) {
+    //         previousAudioMode = audioManager.getMode();
+    //         // Request audio focus before making any device switch.
+    //         audioManager.requestAudioFocus(null, AudioManager.STREAM_VOICE_CALL,
+    //                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+    //         /*
+    //          * Use MODE_IN_COMMUNICATION as the default audio mode. It is required
+    //          * to be in this mode when playout and/or recording starts for the best
+    //          * possible VoIP performance. Some devices have difficulties with
+    //          * speaker mode if this is not set.
+    //          */
+    //         audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+    //         /*
+    //          * Always disable microphone mute during a WebRTC call.
+    //          */
+    //         previousMicrophoneMute = audioManager.isMicrophoneMute();
+    //         audioManager.setMicrophoneMute(false);
+    //     } else {
+    //         audioManager.setMode(previousAudioMode);
+    //         audioManager.abandonAudioFocus(null);
+    //         audioManager.setMicrophoneMute(previousMicrophoneMute);
+    //     }
+    // }
 
         private void requestAudioFocus() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

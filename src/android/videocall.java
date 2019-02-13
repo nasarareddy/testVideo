@@ -23,6 +23,7 @@ public class videocall extends CordovaPlugin {
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
+        this.cordova=cordova;
     }
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
